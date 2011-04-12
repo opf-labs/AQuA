@@ -17,7 +17,10 @@ Find various implementations and try to load. Looking for commonality.
 - Flash Video Encoder - Would not load.
 - Final Cut Pro - Would not recognise.
 
+http://en.wikipedia.org/wiki/Flash_Video
 Ask someone who really groks this stuff.
+
+flvmeta-1.0.11 - also hacked to expose FLVTAG numbers (217)
 
 flvdump (part of flvmeta) diagnosed things just fine.
 OPEN: Does the odd block make it stop? Can it be snipped out?

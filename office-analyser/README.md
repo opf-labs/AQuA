@@ -15,6 +15,11 @@ MS Has ProgID for different versions. http://msdn.microsoft.com/en-us/library/ms
 http://msdn.microsoft.com/en-us/library/921afb2d-6fcd-45a9-9c2a-78e1fc08c5e5(v=PROT.10)#id7
 <7> Section 2.2.4: In Windows the ClassName field contains the ProgID (see [MSDN-ProgID]) of a Component Object Model (COM) component (see [MSDN-COM]) belonging to the creating application.
 
+http://msdn.microsoft.com/en-us/library/aa911706.aspx
+CompObjStream http://msdn.microsoft.com/en-us/library/dd941977(v=prot.10).aspx
+Compound File Binary Format http://msdn.microsoft.com/en-us/library/dd942138.aspx
+
+
 doc2x works, but leaves the embedded Visio as is.
 http://b2xtranslator.sourceforge.net/
 
