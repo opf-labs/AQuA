@@ -16,7 +16,11 @@
 ==================================================================== */
 package org.opf_labs.aqua;
 
+import org.apache.poi.poifs.eventfilesystem.POIFSReader;
+import org.apache.poi.poifs.eventfilesystem.POIFSReaderEvent;
+import org.apache.poi.poifs.eventfilesystem.POIFSReaderListener;
 import org.apache.poi.poifs.filesystem.*;
+import org.apache.poi.hpsf.ClassID;
 import org.apache.poi.hpsf.MarkUnsupportedException;
 import org.apache.poi.hpsf.NoPropertySetStreamException;
 import org.apache.poi.hpsf.Property;
@@ -25,7 +29,9 @@ import org.apache.poi.hwpf.HWPFDocument;
 
 import java.io.FileInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 //import java.io.FileOutputStream;
 import java.util.Iterator;
 
@@ -49,17 +55,62 @@ public class OfficeAnalyser {
             //file.mkdir();
             
             HWPFDocument doc = new HWPFDocument (new FileInputStream(args[i]));
-            System.out.println("doctest: "+doc.getSummaryInformation().getApplicationName());
-            System.out.println("doctest: "+doc.getSummaryInformation().getOSVersion());
-            System.out.println("doctest: "+doc.getDocumentSummaryInformation().getManager());
+            System.out.println("ApplicationName: "+doc.getSummaryInformation().getApplicationName());
+            System.out.println("OSVersion: "+doc.getSummaryInformation().getOSVersion());
+            System.out.println("Manager: "+doc.getDocumentSummaryInformation().getManager());
+            
+            parseCompObj( new File(args[i]) );
 
             dump(root, file);
         }
    }
 
+    
+    public static void parseCompObj(File file) {
+        Collector collector = new Collector();
+        POIFSReader poifsReader = new POIFSReader();
+        poifsReader.registerListener(collector, "\001CompObj");
+        try {
+            poifsReader.read(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // collector.classId now contains the result.
+
+    }
+    
+    // http://mail-archives.apache.org/mod_mbox/poi-user/200504.mbox/%3C0IFL00BM77MPGW@mta6.srv.hcvlny.cv.net%3E
+    // For CLSIDs:
+    // http://anoochit.fedorapeople.org/rpmbuild/BUILD/msttcorefonts/cab-contents/wviewer.stf
+    // http://www.msfn.org/board/topic/139093-create-standalone-word-97/
+    
+    public static class Collector implements POIFSReaderListener {
+        private ClassID classId;
+
+        public void processPOIFSReaderEvent(POIFSReaderEvent event) {
+            InputStream stream = event.getStream();
+
+            try {
+                if (stream.skip(12) == 12) { // magic number for the offset to the clsid.
+                    byte[] classIdBytes = new byte[ClassID.LENGTH];
+                    if (stream.read(classIdBytes) == ClassID.LENGTH) {
+                        classId = new ClassID(classIdBytes, 0);
+                    }
+                }
+            } catch (IOException e) {
+                // Handle error.
+            }
+            System.out.println("Found ClassID: "+classId);
+        }
+    }        
+    
 
     public static void dump(DirectoryEntry root, File parent) throws IOException {
-        System.out.println("Storage Clsid (mappable to creator):"+root.getStorageClsid());
+        System.out.println(root.getName()+" : storage CLSID "+root.getStorageClsid());
         for(Iterator it = root.getEntries(); it.hasNext();){
             Entry entry = (Entry)it.next();
             if(entry instanceof DocumentNode){
@@ -71,8 +122,10 @@ public class OfficeAnalyser {
                 
                 try {
                     PropertySet ps = new PropertySet(is);
-                    for( Property p : ps.getProperties() ) {
-                        System.out.println("Prop: "+p.getID()+" "+p.getValue());
+                    if( ps.getSectionCount() != 0 ) {
+                        for( Property p : ps.getProperties() ) {
+                            System.out.println("Prop: "+p.getID()+" "+p.getValue());
+                        }
                     }
                 } catch (NoPropertySetStreamException e) {
                     // TODO Auto-generated catch block
