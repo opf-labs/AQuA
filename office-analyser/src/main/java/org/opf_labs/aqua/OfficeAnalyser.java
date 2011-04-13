@@ -1,10 +1,9 @@
 /* ====================================================================
-   Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
-   this work for additional information regarding copyright ownership.
-   The ASF licenses this file to You under the Apache License, Version 2.0
-   (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
+   Copyright 2011 Andrew Jackson
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -51,8 +50,6 @@ public class OfficeAnalyser {
             is.close();
 
             DirectoryEntry root = fs.getRoot();
-            File file = new File(root.getName());
-            //file.mkdir();
             
             HWPFDocument doc = new HWPFDocument (new FileInputStream(args[i]));
             System.out.println("ApplicationName: "+doc.getSummaryInformation().getApplicationName());
@@ -61,7 +58,7 @@ public class OfficeAnalyser {
             
             parseCompObj( new File(args[i]) );
 
-            dump(root, file);
+            dump(root);
         }
    }
 
@@ -109,7 +106,7 @@ public class OfficeAnalyser {
     }        
     
 
-    public static void dump(DirectoryEntry root, File parent) throws IOException {
+    public static void dump(DirectoryEntry root) throws IOException {
         System.out.println(root.getName()+" : storage CLSID "+root.getStorageClsid());
         for(Iterator it = root.getEntries(); it.hasNext();){
             Entry entry = (Entry)it.next();
@@ -144,9 +141,7 @@ public class OfficeAnalyser {
                 //System.out.println("Node: "+new String(bytes).substring(0, 10));
             } else if (entry instanceof DirectoryEntry){
                 DirectoryEntry dir = (DirectoryEntry)entry;
-                File file = new File(parent, entry.getName());
-                file.mkdir();
-                dump(dir, file);
+                dump(dir);
             } else {
                 System.err.println("Skipping unsupported POIFS entry: " + entry);
             }
