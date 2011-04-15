@@ -1,0 +1,2 @@
+TODO: add argument parsing for folder with images to compare
+TODO: add argument parsing for perceptualDiff options like treshold

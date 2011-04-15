@@ -1,0 +1,44 @@
+INSTALLATION INSTRUCTIONS
+-------------------------
+Install PHP (Windows/Mac/Linux)
+http://www.php.net/
+
+Install Perceptual Image Diff (Windows/Mac/Linux) 
+http://pdiff.sourceforge.net/
+
+When installing Perceptual Image Diff on Windows you also need FreeImage.dll
+http://freeimage.sourceforge.net/
+This DLL needs to be copied to your Windows installation folder (eg. c:\Windows)
+
+USING THE WRAPPER
+-----------------
+The wrapper script can be put in any folder.
+In order for it to work you need to configure:
+- where the Perceptual Image Diff binary is located: $pdBinary
+- where the folder (w/o trailing slash) with images to compare is located: $pdBinaryOptions 
+
+If you want to pass options such as treshold to the Perceptual Image Diff binary these can be set in: $pdBinaryOptions.
+Please consult the Perceptual Image Diff binary webpage for full details about options.
+PLEASE NOTE: by default the wrapper passes the option '-verbose' to the binary in order for it to work, you don't need to add this option.
+
+Optionally you can turn debugging on by setting '$debug' to 'true'.
+This will provide you with some useful messages when things don't work as expected.
+
+There are two test images provided, these can be found in the subfolder 'testimages'.
+
+RUNNING THE WRAPPER
+-------------------
+php perceptualDiffWrapper.php
+
+OUTPUT OF THE WRAPPER
+---------------------
+The wrapper outputs only when it finds two identical images. This is being output in CSV format (IMAGES_IDENTICAL,image1,image2,number of different pixels) where 'IMAGES_IDENTICAL' is just an informational flag. Example:
+IMAGES_IDENTICAL,image1.jpg,image2.jpg,100
+Please note that when two images are found to be identical, these will be reported twice.
+
+You can redirect output to a file by adding '>output.csv' to the wrapper run command, eg. php perceptualDiffWrapper.php >output.csv.
+You can also redirect output to STDIN of another application if wanted.
+
+PLEASE NOTICE:
+- when you compare 10 files there will 56 comparisons
+- fairly large memory footprint on Windows(tm), especially when comparing images greater than 100kB
