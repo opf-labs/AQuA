@@ -24,7 +24,10 @@ import org.apache.poi.hpsf.MarkUnsupportedException;
 import org.apache.poi.hpsf.NoPropertySetStreamException;
 import org.apache.poi.hpsf.Property;
 import org.apache.poi.hpsf.PropertySet;
+import org.apache.poi.hpsf.Section;
 import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.model.Ffn;
+import org.apache.poi.hwpf.model.TextPiece;
 
 import java.io.FileInputStream;
 import java.io.File;
@@ -41,9 +44,43 @@ import java.util.Iterator;
  * @author Andrew Jackson
  */
 public class OfficeAnalyser {
-
+    
     public static void main(String[] args) throws Exception {
+        //import org.apache.poi.poifs.dev.POIFSDump;
+        //POIFSDump.main(args);
+        
         for (int i = 0; i < args.length; i++) {
+            HWPFDocument doc = new HWPFDocument (new FileInputStream(args[i]));
+            System.out.println("ApplicationName: "+doc.getSummaryInformation().getApplicationName());
+            System.out.println("OSVersion: "+doc.getSummaryInformation().getOSVersion());
+            System.out.println("# paragraphs: "+doc.getDocumentSummaryInformation().getParCount());
+            System.out.println("# bytes: "+doc.getDocumentSummaryInformation().getByteCount());
+            System.out.println("# hidden: "+doc.getDocumentSummaryInformation().getHiddenCount());
+            System.out.println("# lines: "+doc.getDocumentSummaryInformation().getLineCount());
+            System.out.println("# mmclips: "+doc.getDocumentSummaryInformation().getMMClipCount());
+            System.out.println("# notes: "+doc.getDocumentSummaryInformation().getNoteCount());
+            System.out.println("# sections: "+doc.getDocumentSummaryInformation().getSectionCount());
+            System.out.println("# slides: "+doc.getDocumentSummaryInformation().getSlideCount());
+            System.out.println("format: "+doc.getDocumentSummaryInformation().getFormat());
+            for( TextPiece tp : doc.getTextTable().getTextPieces() ) {
+                System.out.println("TP: "+tp.getStringBuffer().substring(0, 100));
+                System.out.println("TP: "+tp.getPieceDescriptor().isUnicode());
+            }
+            for( Object os : doc.getDocumentSummaryInformation().getSections() ) {
+                Section s = (Section) os;
+                System.out.println("ss# fid: "+s.getFormatID());
+                System.out.println("ss# codepage: "+s.getCodepage());                
+                System.out.println("ss# # properties: "+s.getPropertyCount());
+                for( Property sp : s.getProperties() ) {
+                    System.out.println("ss# property: "+sp.getValue().getClass().getCanonicalName()+" "+sp.getValue());
+                }
+            }
+            for( Ffn f : doc.getFontTable().getFontNames() ) {
+                System.out.println("Font: "+f.getMainFontName()+", "+f.getSize()+", "+f.getWeight());
+            }
+            parseCompObj( new File(args[i]) );
+
+            // This
             System.out.println("Dumping " + args[i]);
             FileInputStream is = new FileInputStream(args[i]);
             POIFSFileSystem fs = new POIFSFileSystem(is);
@@ -51,13 +88,6 @@ public class OfficeAnalyser {
 
             DirectoryEntry root = fs.getRoot();
             
-            HWPFDocument doc = new HWPFDocument (new FileInputStream(args[i]));
-            System.out.println("ApplicationName: "+doc.getSummaryInformation().getApplicationName());
-            System.out.println("OSVersion: "+doc.getSummaryInformation().getOSVersion());
-            System.out.println("Manager: "+doc.getDocumentSummaryInformation().getManager());
-            
-            parseCompObj( new File(args[i]) );
-
             dump(root);
         }
    }
@@ -84,6 +114,8 @@ public class OfficeAnalyser {
     // For CLSIDs:
     // http://anoochit.fedorapeople.org/rpmbuild/BUILD/msttcorefonts/cab-contents/wviewer.stf
     // http://www.msfn.org/board/topic/139093-create-standalone-word-97/
+    // For CompObj format, not clear:
+    // FlashPix Format Spec!
     
     public static class Collector implements POIFSReaderListener {
         private ClassID classId;
