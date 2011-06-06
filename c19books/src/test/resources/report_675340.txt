@@ -1,0 +1,4 @@
+-------------------675340.dat------------------------
+No problem found with image files.
+No problem found with ALTO files.
+No problem found in PDF file - all associated images/ALTOs found.

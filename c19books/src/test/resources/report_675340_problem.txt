@@ -1,0 +1,21 @@
+-------------------675340_problem.dat------------------------
+Following images only found in METS, not in ZIP:
+	JP2\003920348_000003Wrong.jp2
+	JP2\003920348_000001Wrong.jp2
+	JP2\003920348_000002Wrong.jp2
+Following images only found in ZIP, not in METS:
+	JP2\003920348_000003.jp2
+	JP2\003920348_000001.jp2
+	JP2\003920348_000004.jp2
+	JP2\003920348_000006.jp2
+	JP2\003920348_000005.jp2
+	JP2\003920348_000002.jp2
+Following ALTO files only found in METS, not in ZIP:
+	ALTO\003920348_000002Wrong.xml
+	ALTO\003920348_000003Wrong.xml
+	ALTO\003920348_000001Wrong.xml
+Following ALTO files only found in ZIP, not in METS:
+	ALTO\003920348_000001.xml
+	ALTO\003920348_000002.xml
+	ALTO\003920348_000003.xml
+Mismatch found between PDF and images/ALTOs: 22,22,19
