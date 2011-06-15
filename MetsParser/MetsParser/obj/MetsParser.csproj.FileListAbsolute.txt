@@ -1,0 +1,5 @@
+c:\MetsParser\MetsParser\obj\Debug\ResolveAssemblyReference.cache
+c:\MetsParser\MetsParser\bin\Debug\MetsParser.exe
+c:\MetsParser\MetsParser\bin\Debug\MetsParser.pdb
+c:\MetsParser\MetsParser\obj\Debug\MetsParser.exe
+c:\MetsParser\MetsParser\obj\Debug\MetsParser.pdb
