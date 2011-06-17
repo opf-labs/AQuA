@@ -1,0 +1,24 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+        <definition name="template" template="/WEB-INF/views/template.jsp" />
+
+        <definition name="home" extends="template">
+                <put-attribute name="content" value="/WEB-INF/views/home.jsp" />
+        </definition>
+        
+        <definition name="returnurl" extends="template">
+                <put-attribute name="content" value="/WEB-INF/views/returnurl.jsp" />
+        </definition>
+        
+        <definition name="report" extends="template">
+                <put-attribute name="content" value="/WEB-INF/views/report.jsp" />
+        </definition>
+        
+        <definition name="reportNotAvailable" extends="template">
+                <put-attribute name="content" value="/WEB-INF/views/reportNotAvailable.jsp" />
+        </definition>
+        
+</tiles-definitions>

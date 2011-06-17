@@ -1,0 +1,352 @@
+html {
+	height: 100%;
+}
+
+body {
+	background: #fff;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	height: auto;
+	overflow-y: scroll;
+	overflow-x: auto;
+	background: -moz-linear-gradient(top, #bdbde3, #ffffff);
+	background: -webkit-gradient(linear, left top, left bottom, from(#bdbde3),
+		to(#ffffff), fixed );
+	/* IE specific */
+	filter: progid :   DXImageTransform.Microsoft.Gradient ( StartColorStr =
+		'#bdbde3', EndColorStr = '#ffffff', GradientType = 0 );
+}
+
+#navigation_inner {
+	line-height: 26px;
+	height: 26px;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #000;
+	width: 100%;
+}
+
+#navLinksLeft {
+	float: left;
+	margin-left: 15px;
+}
+
+#navLinksLeft a {
+	color: #fff;
+	text-decoration: none;
+}
+
+#navLinksLeft a:hover { 
+	color: #ccc;
+	text-decoration: underline;
+}	
+	
+#navLinksRight { 
+	float:right;
+	margin-right: 15px;
+}
+
+#navLinksRight a {
+	color: #fff;
+	text-decoration: none;
+}
+
+#navLinksRight a:hover {
+	color: #ccc;
+	text-decoration: underline;
+}
+
+#navLinksAdmin a {
+	color: #900020;
+	text-decoration: none;
+}
+
+#navLinksAdmin a:hover {
+	color: #c32148;
+	text-decoration: underline;
+}
+
+#header {
+	height: 50px;
+	background-color: #002741;
+}
+
+#content {
+	float: left;
+	width: 67%;
+}
+
+#content_inner {
+	background-color: #fff;
+	margin: 10px;
+	margin-right: 5px;
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+
+#sidebar {
+	float: right;
+	width: 33%;
+}
+
+#sidebar_inner {
+	background-color: #fff;
+	margin: 10px;
+	margin-left: 5px;
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+
+#sidebar {
+	float: right;
+	width: 33%;
+}
+
+#sidebar_inner {
+
+}
+
+h1 {
+	margin: 2px;
+}
+
+.rounded {
+	-moz-border-radius: 3px; /* Firefox */
+	-webkit-border-radius: 3px; /* Safari, Chrome */
+	border-radius: 3px; /* CSS3 */
+}
+
+h1,h2,h3 {
+	font-family: Times New Roman, serif;
+	margin: 2px;
+}
+
+h2 {
+	margin-top: 7px;
+
+}
+
+.rounded {
+	-moz-border-radius: 3px; /* Firefox */
+	-webkit-border-radius: 3px; /* Safari, Chrome */
+	border-radius: 3px; /* CSS3 */
+}
+
+#footer {
+	clear: both;
+}
+
+#depositForm input.txt {
+	width: 69%;
+}
+
+#depositForm input.fileChooser {
+	width: 69%;
+}
+
+#depositForm textarea {
+	width: 69%;
+	height: 100px;
+}
+
+#depositForm applet {
+	color: #00008B;
+	background-color: #FFF;
+	width: 100%;
+}
+
+#depositForm form div {
+	clear: left;
+	margin: 4px;
+	padding: 4px;
+}
+
+#depositForm applet {
+	color: #00008B;
+	background-color: #FFF;
+	width: 100%;
+}
+
+#depositForm form div {
+	clear: left;
+	margin: 4px;
+	padding: 4px;
+	border: 1px solid #ccc;
+	background: #FFFFEE;
+	vertical-align: center;
+}
+
+#depositForm form div label {
+	float: left;
+	width: 30%;
+	font: bold 0.9em Arial, Helvetica, sans-serif;
+}
+
+#depositForm form div#appletWrapper {
+	float: left;
+	width: 30%;
+	font: bold 0.9em Arial, Helvetica, sans-serif;
+}
+
+#depositForm table {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#depositForm table td.colOne {
+	font: bold 0.9em Arial, Helvetica, sans-serif;
+	width: 15%;
+}
+
+#depositForm table td.colTwo {
+	width: 15%;
+}
+
+#depositForm tr.rowOne {
+	height: 200px;
+}
+
+#users {
+	padding-top: 15px;
+	border: 1px solid #ccc;
+	background-color: #ffdddd;
+}
+
+#createNewUser {
+	padding-top: 15px;
+	border: 1px solid #ccc;
+	background-color: #ffdddd;
+	font-size: 0.85em;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+#createNewUser table {
+	width: 80%;
+}
+
+#createNewUser input.txt {
+	width: 100%;
+}
+
+.rj {
+	text-align: right;
+}
+
+#createNewUser td {
+	font-size: 0.85em;
+}
+
+#settings {
+	border: 1px solid #ccc;
+	background: #ffdddd;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
+.settingsLine {
+	width: 100%;
+	vertical-align: bottom;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.settingsLabel {
+	float: left;
+	font-weight: bold;
+	width: 30%;
+	text-align: right;
+	margin-right: 10px;
+}
+
+.settingsInput {
+	margin-left: 32%;
+	margin-right: 0;
+}
+
+.settingsInput input {
+	width: 100%;
+}
+
+.settingsInput textarea {
+	width: 100%;
+	height: 300px;
+	overflow: scroll;
+}
+
+.userLine {
+	width: 95%;
+	text-align: center;
+	vertical-align: bottom;
+	border: 1px solid #aaa;
+	margin: 5px;
+	padding: 3px;
+}
+
+.userName {
+	float: left;
+	width: 40%;
+	font-weight: bold;
+	font-size: 0.85em;
+	vertical-align: bottom;
+}
+
+.userResetPassword {
+	float: left;
+	vertical-align: bottom;
+	text-align: left;
+	width: 45%;
+}
+
+.userResetPassword td {
+	font-size: 0.85em;
+}
+
+.userDelete {
+	float: left;
+	width: 10%;
+	vertical-align: bottom;
+	margin: 0px;
+}
+
+#actionSuccess {
+	border: 2px solid #00cc00;
+	color: #006400;
+	text-align: center;
+	vertical-align: middle;
+	margin: 10px;
+	padding: 10px;
+}
+#actionFailure {
+	border: 2px solid #cc0000;
+	color: #640000;
+	text-align: center;
+	vertical-align: middle;
+	margin: 10px;
+	padding: 10px;
+}
+
+#currentUploads {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 10px;
+	background: #ffdddd;
+}
+
+#usage {
+	font-weight: bold;
+}
+
+.error {
+	display: block;
+	margin: 5px;
+	padding: 2px;
+	border: 1px solid #cc0000;
+	color: #640000;
+	text-align: center;
+}
+

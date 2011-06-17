@@ -1,0 +1,55 @@
+package uk.ac.ox.bodleian.beam.deposit.postprocessing;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+public class MD5Thread extends Thread {
+	private File file = null;
+	private String md5 = null;
+	private ArrayList<IMD5ThreadListener> listeners = null;
+	
+	public MD5Thread(File f) {
+		this.file = f;		
+	}
+	
+	public void run() {
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			md5 = DigestUtils.md5Hex(fis);
+			fis.close();
+			fis = null;
+			notifyListeners();
+			dispose();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void notifyListeners() {
+		if (listeners != null) {
+			for (int i = 0; i < listeners.size(); i++) {
+				((IMD5ThreadListener) listeners.get(i)).threadComplete(file, md5);
+			}
+		}
+	}
+	
+	public void addListener(IMD5ThreadListener mtl) {
+		if (listeners == null) {
+			listeners = new ArrayList<IMD5ThreadListener>();			
+		}
+		listeners.add(mtl);
+	}
+	
+	public void dispose() {
+		file = null;
+		listeners = null;
+		md5 = null;
+	}
+}

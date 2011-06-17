@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing
+END
+UploadCompleteTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing/UploadCompleteTask.java
+END
+ReceiptGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing/ReceiptGenerator.java
+END
+UploadCompleteQueue.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing/UploadCompleteQueue.java
+END
+MailSenderWrapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing/MailSenderWrapper.java
+END
+IMD5ThreadListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing/IMD5ThreadListener.java
+END
+MD5Thread.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svnroot/beamwebdeposit/!svn/ver/8/deposit/src/uk/ac/ox/bodleian/beam/deposit/postprocessing/MD5Thread.java
+END

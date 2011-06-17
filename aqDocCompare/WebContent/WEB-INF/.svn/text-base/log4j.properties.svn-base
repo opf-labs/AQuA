@@ -1,0 +1,8 @@
+log4j.rootLogger=INFO, BEAMDEP
+log4j.appender.BEAMDEP=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.BEAMDEP.file=${catalina.base}/logs/beamdep.out
+log4j.appender.BEAMDEP.encoding=UTF-8
+log4j.appender.BEAMDEP.layout=org.apache.log4j.PatternLayout
+log4j.appender.BEAMDEP.DatePattern='.'yyyy-MM-dd'.log'
+log4j.appender.BEAMDEP.layout.ConversionPattern = %d [%t] %-5p %c- %m%n 
+log4j.appender.BEAMDEP.append=true
