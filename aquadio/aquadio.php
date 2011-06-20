@@ -8,40 +8,45 @@ License:GPL
 
 
 // configuration options
-// set_time_limit (120) sets execution time to 120 seconds (PHP default: 30)
-set_time_limit(120);
+// set_time_limit (0) sets execution time to infinite (PHP default: 30)
+set_time_limit(0);
 // set memory to 256M
 ini_set('memory_limit', '256M');
 // location of getID3() library
 $getId3Lib = '../getid3/getid3/getid3.php';
+// generate md5 sum of file (file.ext.md5) next to file (true/false)
+// this is a cpu bogging option!
+$md5generate = false;
 
 /* ************************************************************** */
 // DO NOT EDIT BELOW THIS LINE UNLESS YOU KNOW WHAT YOU ARE DOING
 if(!defined('STDIN')) {
-	die("This tool can only be run from commandline");
+	die("This tool can only be run from commandline".PHP_EOL);
 	} 
 
 if(!isset($argv[1])) {
-	die("This tool needs at least 1 argument: path");
+	die("This tool needs at least 1 argument: path".PHP_EOL);
 	}
 
-// include getID3() library (can be in a different directory if full path is specified)
+// include getID3() library
 require_once($getId3Lib);
 
 // Initialize getID3 engine
 $getID3 = new getID3;
 
 if(!@opendir($argv[1])) {
-	die("Invalid path specified: '{$argv[1]}'");
+	die("Invalid path specified: '{$argv[1]}'".PHP_EOL);
 	}
 $DirectoryToScan = $argv[1];
 $dir = opendir($DirectoryToScan);
 
+echo "AQUAdio starting job, please wait...".PHP_EOL;
+
 while (($file = readdir($dir)) !== false) {
 	$FullFileName = realpath($DirectoryToScan."/".$file);
 	// .3gpp files are being skipped because of bugs in getid3()
-	// .xml files are being skipped because we don't want to analyse them 
-	if (is_file($FullFileName) && !preg_match("/\.3gpp$|\.xml$/",$FullFileName)) {
+	// .xml and .md5 files are being skipped because we don't want to analyse them 
+	if (is_file($FullFileName) && !preg_match("/\.3gpp$|\.xml$|\.md5$/",$FullFileName)) {
 
 		$ThisFileInfo = $getID3->analyze($FullFileName);
 		$useEncoding = "ISO-8859-1";
@@ -50,8 +55,16 @@ while (($file = readdir($dir)) !== false) {
 			}
 		$xmlFilename = "{$FullFileName}.xml";
 		if(!@file_put_contents($xmlFilename,array2xml($ThisFileInfo))) {
-			die("Could not write file '{$xmlFilename}'");
+			die("Could not write file '{$xmlFilename}'".PHP_EOL);
 			}
+		if($md5generate == true) {
+			$md5Filename = "{$FullFileName}.md5";
+			$md5sum = md5_file($FullFileName)." *".$file;
+			if(!@file_put_contents($md5Filename,$md5sum)) {
+				die("Could not write file '{$md5Filename}'".PHP_EOL);
+				}
+			}
+
 		}
 
 	// MdR: this needs some more attention!!!
@@ -64,6 +77,7 @@ while (($file = readdir($dir)) !== false) {
 		rename($FullFileName, $moveFile);
 		}
 	}
+echo "AQUAdio has finished job ;-)".PHP_EOL;
 //  bye bye!
 exit;
 
