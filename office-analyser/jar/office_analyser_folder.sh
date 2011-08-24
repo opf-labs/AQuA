@@ -1,5 +1,5 @@
 # /******************************************************************************************/
-# AQuA Office Analyser recursive folder batch for Windows
+# AQuA Office Analyser recursive folder batch for Linux
 # License: APACHE 2.0
 # Author: Maurice de Rooij (OPF/NANETH) <maurice.de.rooij@nationaalarchief.nl>, August 2011
 # /******************************************************************************************/
