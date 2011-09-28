@@ -1,0 +1,10 @@
+application/msword:429
+application/rtf:31
+text/html:29
+text/plain:22
+application/octet-stream:19
+application/pdf:3
+application/vnd.ms-powerpoint:3
+image/x-ms-bmp:1
+application/x-tika-msoffice:1
+application/vnd.openxmlformats-officedocument.wordprocessingml.document:1

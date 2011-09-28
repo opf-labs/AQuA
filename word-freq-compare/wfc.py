@@ -2,7 +2,7 @@
 ranks = {}
 
 # Load the reference list
-for line in open('gsl.txt','r').readlines():
+for line in open('bnclists-lemma.num','r').readlines():
 	parts = line.split(' ')
 	word = parts[2].strip();
 	rank = parts[1]
