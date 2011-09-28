@@ -58,10 +58,9 @@ public class OfficeAnalyser {
     	SMOutputDocument xmldoc = SMOutputFactory.createOutputDocument(
     			SMOutputFactory.getGlobalXMLOutputFactory().createXMLStreamWriter(
     					System.out, "UTF-8"), "1.1", "UTF-8", true);
-    	//SMOutputFactory sf = new SMOutputFactory(XMLOutputFactory2.newInstance());
-    	//SMOutputDocument xmldoc = sf.createOutputDocument(System.out);//new FileOutputStream("output.xml"));
-    	xmldoc.setIndentation("\n ", 1, 2); // for unix linefeed, 2 spaces per level    
-    	// write doc like:    
+    	
+    	xmldoc.setIndentation("\n ", 1, 2); // for unix linefeed, 2 spaces per level
+    	
     	SMOutputElement xmlroot = xmldoc.addElement("properties");    
     	
     	// Loop through arguments:
@@ -70,6 +69,7 @@ public class OfficeAnalyser {
         	xd.addAttribute("href", args[i]);
             HWPFDocument doc = new HWPFDocument (new FileInputStream(args[i]));
             
+            // SummaryInformation
             SMOutputElement sie = xd.addElement("SummaryInformation");
         	sie.addElement("ApplicationName").addCharacters(doc.getSummaryInformation().getApplicationName());
         	sie.addElement("OSVersion").addCharacters(""+doc.getSummaryInformation().getOSVersion());
@@ -92,7 +92,8 @@ public class OfficeAnalyser {
          	sie.addElement("LastPrinted").addCharacters(""+doc.getSummaryInformation().getLastPrinted());
          	sie.addElement("LastSaveDateTime").addCharacters(""+doc.getSummaryInformation().getLastSaveDateTime());
          	sie.addElement("Thumbnail").addCharacters(""+doc.getSummaryInformation().getThumbnail());
-        	
+
+         	// TextTable
             SMOutputElement tte = xd.addElement("TextTable");
             for( TextPiece tp : doc.getTextTable().getTextPieces() ) {
             	SMOutputElement tpe = tte.addElement("TextPiece");
@@ -100,8 +101,9 @@ public class OfficeAnalyser {
             	tpe.addCharacters(tp.getStringBuilder().toString() );
             }
             
+            // DocumentSummaryInformation
             SMOutputElement dsie = xd.addElement("DocumentSummaryInformation");
-        	dsie.addElement("ParCound").addCharacters(""+doc.getDocumentSummaryInformation().getParCount());
+        	dsie.addElement("ParCount").addCharacters(""+doc.getDocumentSummaryInformation().getParCount());
         	dsie.addElement("ByteCount").addCharacters(""+doc.getDocumentSummaryInformation().getByteCount());
         	dsie.addElement("HiddenCount").addCharacters(""+doc.getDocumentSummaryInformation().getHiddenCount());
         	dsie.addElement("LineCount").addCharacters(""+doc.getDocumentSummaryInformation().getLineCount());
@@ -113,6 +115,7 @@ public class OfficeAnalyser {
         	dsie.addElement("PresentationFormat").addCharacters(""+doc.getDocumentSummaryInformation().getPresentationFormat());
         	dsie.addElement("Company").addCharacters(""+doc.getDocumentSummaryInformation().getCompany());
         	dsie.addElement("Category").addCharacters(""+doc.getDocumentSummaryInformation().getCategory());            
+        	// Sections
             for( Object os : doc.getDocumentSummaryInformation().getSections() ) {
                 Section s = (Section) os;
                 SMOutputElement se = dsie.addElement("Section");
@@ -147,7 +150,6 @@ public class OfficeAnalyser {
             	pe.addElement("VerticalScalingFactor").addCharacters(""+p.getVerticalScalingFactor());
             	pe.addElement("Content").addCharacters(""+p.getContent());
             }
-            
             //parseCompObj( new File(args[i]) );
 
             // This
