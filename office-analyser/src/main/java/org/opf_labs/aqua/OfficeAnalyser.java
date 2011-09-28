@@ -28,14 +28,20 @@ import org.apache.poi.hpsf.Section;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.model.Ffn;
 import org.apache.poi.hwpf.model.TextPiece;
+import org.apache.poi.hwpf.usermodel.Picture;
+import org.codehaus.staxmate.SMOutputFactory;
+import org.codehaus.staxmate.out.SMOutputDocument;
+import org.codehaus.staxmate.out.SMOutputElement;
 
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 //import java.io.FileOutputStream;
 import java.util.Iterator;
+
 
 /**
  *
@@ -48,52 +54,119 @@ public class OfficeAnalyser {
     public static void main(String[] args) throws Exception {
         //import org.apache.poi.poifs.dev.POIFSDump;
         //POIFSDump.main(args);
-        
+    	
+    	SMOutputDocument xmldoc = SMOutputFactory.createOutputDocument(
+    			SMOutputFactory.getGlobalXMLOutputFactory().createXMLStreamWriter(
+    					System.out, "UTF-8"), "1.1", "UTF-8", true);
+    	//SMOutputFactory sf = new SMOutputFactory(XMLOutputFactory2.newInstance());
+    	//SMOutputDocument xmldoc = sf.createOutputDocument(System.out);//new FileOutputStream("output.xml"));
+    	xmldoc.setIndentation("\n ", 1, 2); // for unix linefeed, 2 spaces per level    
+    	// write doc like:    
+    	SMOutputElement xmlroot = xmldoc.addElement("properties");    
+    	
+    	// Loop through arguments:
         for (int i = 0; i < args.length; i++) {
+        	SMOutputElement xd = xmlroot.addElement("document");
+        	xd.addAttribute("href", args[i]);
             HWPFDocument doc = new HWPFDocument (new FileInputStream(args[i]));
-            System.out.println("ApplicationName: "+doc.getSummaryInformation().getApplicationName());
-            System.out.println("OSVersion: "+doc.getSummaryInformation().getOSVersion());
-            System.out.println("# paragraphs: "+doc.getDocumentSummaryInformation().getParCount());
-            System.out.println("# bytes: "+doc.getDocumentSummaryInformation().getByteCount());
-            System.out.println("# hidden: "+doc.getDocumentSummaryInformation().getHiddenCount());
-            System.out.println("# lines: "+doc.getDocumentSummaryInformation().getLineCount());
-            System.out.println("# mmclips: "+doc.getDocumentSummaryInformation().getMMClipCount());
-            System.out.println("# notes: "+doc.getDocumentSummaryInformation().getNoteCount());
-            System.out.println("# sections: "+doc.getDocumentSummaryInformation().getSectionCount());
-            System.out.println("# slides: "+doc.getDocumentSummaryInformation().getSlideCount());
-            System.out.println("format: "+doc.getDocumentSummaryInformation().getFormat());
+            
+            SMOutputElement sie = xd.addElement("SummaryInformation");
+        	sie.addElement("ApplicationName").addCharacters(doc.getSummaryInformation().getApplicationName());
+        	sie.addElement("OSVersion").addCharacters(""+doc.getSummaryInformation().getOSVersion());
+         	sie.addElement("Author").addCharacters(""+doc.getSummaryInformation().getAuthor());
+         	sie.addElement("CharCount").addCharacters(""+doc.getSummaryInformation().getCharCount());
+         	sie.addElement("Comments").addCharacters(""+doc.getSummaryInformation().getComments());
+         	sie.addElement("EditTime").addCharacters(""+doc.getSummaryInformation().getEditTime());
+         	sie.addElement("Format").addCharacters(""+doc.getSummaryInformation().getFormat());
+         	sie.addElement("Keywords").addCharacters(""+doc.getSummaryInformation().getKeywords());
+         	sie.addElement("LastAuthor").addCharacters(""+doc.getSummaryInformation().getLastAuthor());
+         	sie.addElement("PageCount").addCharacters(""+doc.getSummaryInformation().getPageCount());
+         	sie.addElement("RevNumber").addCharacters(""+doc.getSummaryInformation().getRevNumber());
+         	sie.addElement("SectionCount").addCharacters(""+doc.getSummaryInformation().getSectionCount());
+         	sie.addElement("Security").addCharacters(""+doc.getSummaryInformation().getSecurity());
+         	sie.addElement("Subject").addCharacters(""+doc.getSummaryInformation().getSubject());
+         	sie.addElement("Template").addCharacters(""+doc.getSummaryInformation().getTemplate());
+         	sie.addElement("Title").addCharacters(""+doc.getSummaryInformation().getTitle());
+         	sie.addElement("WordCount").addCharacters(""+doc.getSummaryInformation().getWordCount());
+         	sie.addElement("CreatedDateTime").addCharacters(""+doc.getSummaryInformation().getCreateDateTime());
+         	sie.addElement("LastPrinted").addCharacters(""+doc.getSummaryInformation().getLastPrinted());
+         	sie.addElement("LastSaveDateTime").addCharacters(""+doc.getSummaryInformation().getLastSaveDateTime());
+         	sie.addElement("Thumbnail").addCharacters(""+doc.getSummaryInformation().getThumbnail());
+        	
+            SMOutputElement tte = xd.addElement("TextTable");
             for( TextPiece tp : doc.getTextTable().getTextPieces() ) {
-                System.out.println("TP: "+tp.getStringBuffer().substring(0, 100));
-                System.out.println("TP: "+tp.getPieceDescriptor().isUnicode());
+            	SMOutputElement tpe = tte.addElement("TextPiece");
+            	tpe.addAttribute("isUnicode", ""+tp.getPieceDescriptor().isUnicode());
+            	tpe.addCharacters(tp.getStringBuilder().toString() );
             }
+            
+            SMOutputElement dsie = xd.addElement("DocumentSummaryInformation");
+        	dsie.addElement("ParCound").addCharacters(""+doc.getDocumentSummaryInformation().getParCount());
+        	dsie.addElement("ByteCount").addCharacters(""+doc.getDocumentSummaryInformation().getByteCount());
+        	dsie.addElement("HiddenCount").addCharacters(""+doc.getDocumentSummaryInformation().getHiddenCount());
+        	dsie.addElement("LineCount").addCharacters(""+doc.getDocumentSummaryInformation().getLineCount());
+        	dsie.addElement("MMClipCount").addCharacters(""+doc.getDocumentSummaryInformation().getMMClipCount());
+        	dsie.addElement("NoteCount").addCharacters(""+doc.getDocumentSummaryInformation().getNoteCount());
+        	dsie.addElement("SectionCount").addCharacters(""+doc.getDocumentSummaryInformation().getSectionCount());
+        	dsie.addElement("SlideCount").addCharacters(""+doc.getDocumentSummaryInformation().getSlideCount());
+        	dsie.addElement("Format").addCharacters(""+doc.getDocumentSummaryInformation().getFormat());
+        	dsie.addElement("PresentationFormat").addCharacters(""+doc.getDocumentSummaryInformation().getPresentationFormat());
+        	dsie.addElement("Company").addCharacters(""+doc.getDocumentSummaryInformation().getCompany());
+        	dsie.addElement("Category").addCharacters(""+doc.getDocumentSummaryInformation().getCategory());            
             for( Object os : doc.getDocumentSummaryInformation().getSections() ) {
                 Section s = (Section) os;
-                System.out.println("ss# fid: "+s.getFormatID());
-                System.out.println("ss# codepage: "+s.getCodepage());                
-                System.out.println("ss# # properties: "+s.getPropertyCount());
+                SMOutputElement se = dsie.addElement("Section");
+                se.addElement("FormatID").addCharacters(""+s.getFormatID());
+                se.addElement("CodePage").addCharacters(""+s.getCodepage());
+                se.addElement("PropertyCount").addCharacters(""+s.getPropertyCount());
                 for( Property sp : s.getProperties() ) {
-                    System.out.println("ss# property: "+sp.getValue().getClass().getCanonicalName()+" "+sp.getValue());
+                	SMOutputElement pe = se.addElement("Property");
+                	pe.addAttribute("class", sp.getValue().getClass().getCanonicalName());
+                	pe.addCharacters(sp.getValue().toString());
                 }
             }
+            SMOutputElement fte = xd.addElement("FontTable");
             for( Ffn f : doc.getFontTable().getFontNames() ) {
-                System.out.println("Font: "+f.getMainFontName()+", "+f.getSize()+", "+f.getWeight());
+            	SMOutputElement fe = fte.addElement("Font");
+            	fe.addElement("MainFontName").addCharacters(f.getMainFontName());
+            	try {
+            		fe.addElement("AltFontName").addCharacters(f.getAltFontName());
+            	} catch( Exception e ) {
+            		// Seems to fail, and no safe test found as yet.
+            	}
+            	fe.addElement("Size").addCharacters(""+f.getSize());
+            	fe.addElement("Weight").addCharacters(""+f.getWeight());
             }
-            parseCompObj( new File(args[i]) );
+            SMOutputElement pte = xd.addElement("PicturesTable");
+            for( Picture p  : doc.getPicturesTable().getAllPictures() ) {
+            	SMOutputElement pe = pte.addElement("Picture");
+            	pe.addElement("MimeType").addCharacters(p.getMimeType());
+            	pe.addElement("Width").addCharacters(""+p.getWidth());
+            	pe.addElement("Height").addCharacters(""+p.getHeight());
+            	pe.addElement("HorizontalScalingFactor").addCharacters(""+p.getHorizontalScalingFactor());
+            	pe.addElement("VerticalScalingFactor").addCharacters(""+p.getVerticalScalingFactor());
+            	pe.addElement("Content").addCharacters(""+p.getContent());
+            }
+            
+            //parseCompObj( new File(args[i]) );
 
             // This
-            System.out.println("Dumping " + args[i]);
+            //System.out.println("Dumping " + args[i]);
             FileInputStream is = new FileInputStream(args[i]);
             POIFSFileSystem fs = new POIFSFileSystem(is);
             is.close();
 
             DirectoryEntry root = fs.getRoot();
             
-            dump(root);
+            //dump(root);
+            
+        	xmldoc.closeRoot(); // important, flushes, closes output
+        	
         }
    }
 
-    
-    public static void parseCompObj(File file) {
+
+	public static void parseCompObj(File file) {
         Collector collector = new Collector();
         POIFSReader poifsReader = new POIFSReader();
         poifsReader.registerListener(collector, "\001CompObj");

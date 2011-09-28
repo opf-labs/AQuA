@@ -43,14 +43,42 @@
   	<dependency>
   		<groupId>org.apache.poi</groupId>
   		<artifactId>poi</artifactId>
-  		<version>3.7</version>
+  		<version>3.8-beta4</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
   		<groupId>org.apache.poi</groupId>
   		<artifactId>poi-scratchpad</artifactId>
-  		<version>3.7</version>
+  		<version>3.8-beta4</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.codehaus.staxmate</groupId>
+  		<artifactId>staxmate</artifactId>
+  		<version>1.3.1</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.codehaus.staxmate</groupId>
+  		<artifactId>stax2</artifactId>
+  		<version>2.1</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.codehaus.woodstox</groupId>
+  		<artifactId>woodstox-core-asl</artifactId>
+  		<version>4.1.2</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-io</groupId>
+  		<artifactId>commons-io</artifactId>
+  		<version>2.0.1</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
