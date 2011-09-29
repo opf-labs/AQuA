@@ -1,0 +1,17 @@
+Create SQLite database by running
+
+sqlite3 volumes.db < schema.sql
+
+Run php sax2sql.php name_of_image.xml > output.txt
+to ingest file system tree into database
+
+Run php applyPermmissions.php name_of_image.aff
+to apply some permissions to files contained in the image
+
+Point web browser to index.php to get list of image volumes, 
+and browse the file systems contained in them
+
+BUGS
+
+sax2sql.php expects folders to have name_type 'd'. If there is a
+folder which has name_type '-', then this breaks the algorithm.
