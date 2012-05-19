@@ -1,0 +1,5 @@
+@CHARSET "ISO-8859-1";
+h1 {text-align: center;}
+table { border: 1px solid black; width: 100%; margin: 0; border-spacing: 0; }
+td { border: 1px solid black; padding: 5px; margin: 0; }
+td.celluleAttribut { text-align: left; width: 20%; }
