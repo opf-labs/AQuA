@@ -20,9 +20,10 @@ The dependencies are :
 	commons-logging-1.0.4.jar
 	commons-net-2.0.jar
 	commons-pool-1.3.jar
-	fastutil-5.0.3-heritrix-subset-1.0.jar
 	
-Since heritrix-1.14.4.jar is not in a maven repository, it needs to be added to your local repo by a :
+Since heritrix-1.14.4.jar is not in a maven repository, it needs to be 
+1/ downloaded from https://webarchive.jira.com/wiki/display/Heritrix/Heritrix#Heritrix-Downloads
+2/ added to your local repo by a :
 mvn install:install-file -DgroupId=org.archive.heritrix -DartifactId=archive-commons -Dversion=1.14.4 -Dpackaging=jar -Dfile=/path/to/heritrix-1.14.4.jar
 
 The generation of the war to be deployed in a web server is made by :
@@ -30,4 +31,4 @@ The generation of the war to be deployed in a web server is made by :
   mvn package
 
 The generation of the appropriate Eclipse files :
-mvn eclipse:eclipse -Dwtpversion=2.0
+  mvn eclipse:eclipse -Dwtpversion=2.0
